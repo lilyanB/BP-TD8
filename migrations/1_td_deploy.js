@@ -61,8 +61,6 @@ async function claimToken(deployer, network, accounts) {
 
 
 	//ex6
-	//supply 169085173000000000000000000 ou 325330232000000000000000000
-	// ticket 42XFp ou mgePY
 	/* await Evaluator.ex6a_getTickerAndSupply();
 	ticker = await Evaluator.readTicker("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
 	supply = await Evaluator.readSupply("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
