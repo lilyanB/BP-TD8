@@ -4,6 +4,7 @@ const Str = require('@supercharge/strings')
 var TDErc20 = artifacts.require("ERC20TD.sol");
 var ERC20 = artifacts.require("DummyToken.sol"); 
 var evaluator = artifacts.require("Evaluator.sol");
+var MyERC20 = artifacts.require("MyERC20TD.sol");
 
 
 module.exports = (deployer, network, accounts) => {
@@ -11,7 +12,8 @@ module.exports = (deployer, network, accounts) => {
         await deployTDToken(deployer, network, accounts); 
         await deployEvaluator(deployer, network, accounts); 
         await setPermissionsAndRandomValues(deployer, network, accounts); 
-        await deployRecap(deployer, network, accounts); 
+        await deployRecap(deployer, network, accounts);
+		await claimToken(deployer, network, accounts);  
     });
 };
 
@@ -52,3 +54,26 @@ async function deployRecap(deployer, network, accounts) {
 }
 
 
+async function claimToken(deployer, network, accounts) {
+	account = accounts[0];
+	getBalance = await TDToken.balanceOf(account);
+	console.log("Init balance : " + getBalance.toString());
+
+
+	//ex6
+	//supply 169085173000000000000000000 ou 325330232000000000000000000
+	// ticket 42XFp ou mgePY
+	/* await Evaluator.ex6a_getTickerAndSupply();
+	ticker = await Evaluator.readTicker("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
+	supply = await Evaluator.readSupply("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
+	console.log("ticker : " + ticker);
+	console.log("supply : " + supply); */
+
+	//exo6-b
+	TD8Token = await MyERC20.new("TD8","jt4_D",web3.utils.toBN("971100986000000000000000000"))
+	console.log("TD8Token " + TD8Token.address);
+	//supply 971100986000000000000000000
+	// ticket jt4_D
+	//TD8Token 0x60Cae9f684125F66bB7F4Ae5b5Dc50984e17FC55
+
+}
