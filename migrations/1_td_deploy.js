@@ -60,7 +60,7 @@ async function Exercices(deployer, network, accounts) {
 	console.log("Init balance : " + getBalance.toString());
 
 	//exo6-a
-	console.log("Exercice 6a")
+	console.log("Exercice 6a----------------")
 	await Evaluator.ex6a_getTickerAndSupply({from: account})
 	const ticker = await Evaluator.readTicker(account)
 	const supply = await Evaluator.readSupply(account)
@@ -70,7 +70,7 @@ async function Exercices(deployer, network, accounts) {
 	console.log("balance ex6a : " + balance_ex6a)
 
 	//exo6-b
-	console.log("Exercice 6b")
+	console.log("Exercice 6b ------------")
 	MyERC20 = await MyERC20.new(ticker, ticker, supply)
 	console.log("My ERC20 " + MyERC20.address)
 	await Evaluator.submitErc20(MyERC20.address, {from: account})
