@@ -13,7 +13,7 @@ module.exports = (deployer, network, accounts) => {
         await deployEvaluator(deployer, network, accounts); 
         await setPermissionsAndRandomValues(deployer, network, accounts); 
         await deployRecap(deployer, network, accounts);
-		await claimToken(deployer, network, accounts);  
+		await Exercices(deployer, network, accounts);  
     });
 };
 
@@ -54,24 +54,28 @@ async function deployRecap(deployer, network, accounts) {
 }
 
 
-async function claimToken(deployer, network, accounts) {
+async function Exercices(deployer, network, accounts) {
 	account = accounts[0];
 	getBalance = await TDToken.balanceOf(account);
 	console.log("Init balance : " + getBalance.toString());
 
-
-	//ex6
-	/* await Evaluator.ex6a_getTickerAndSupply();
-	ticker = await Evaluator.readTicker("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
-	supply = await Evaluator.readSupply("0x44F6827da0302b01888b0b78fFA8914D95c508fB");
-	console.log("ticker : " + ticker);
-	console.log("supply : " + supply); */
+	//exo6-a
+	console.log("Exercice 6a")
+	await Evaluator.ex6a_getTickerAndSupply({from: account})
+	const ticker = await Evaluator.readTicker(account)
+	const supply = await Evaluator.readSupply(account)
+	console.log("ticker " + ticker)
+	console.log("supply " + supply)
+	const balance_ex6a = await TDToken.balanceOf(account)
+	console.log("balance ex6a : " + balance_ex6a)
 
 	//exo6-b
-	TD8Token = await MyERC20.new("TD8","jt4_D",web3.utils.toBN("971100986000000000000000000"))
-	console.log("TD8Token " + TD8Token.address);
-	//supply 971100986000000000000000000
-	// ticket jt4_D
-	//TD8Token 0x60Cae9f684125F66bB7F4Ae5b5Dc50984e17FC55
+	console.log("Exercice 6b")
+	MyERC20 = await MyERC20.new(ticker, ticker, supply)
+	console.log("My ERC20 " + MyERC20.address)
+	await Evaluator.submitErc20(MyERC20.address, {from: account})
+	await Evaluator.ex6b_testErc20TickerAndSupply({from: account})
+	const balance_ex6b = await TDToken.balanceOf(account)
+	console.log("balance_ex6b " + balance_ex6b)
 
 }
